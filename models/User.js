@@ -19,11 +19,15 @@ const UserSchema = mongoose.Schema({
         unique: true,
         required: true,
     },
-    joinDate: {
+    password: {
+        type: String,
+        required: true,
+    },
+    createdOn: {
         type: Date,
         default: Date.now,
     },
-    modifiedData: {
+    modifiedOn: {
         type: Date,
         default: null,
     },
