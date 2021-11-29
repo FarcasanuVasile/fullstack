@@ -1,10 +1,14 @@
 const express = require("express");
 const fileUpload = require("express-fileupload");
+const connectDB = require("./config/db");
 
 // Path module willl be used to create a valid absolute path for saving the uploaded file.
 const path = require("path");
 
 const app = express();
+
+// Connect to DB
+connectDB();
 
 // Init fileupload
 app.use(fileUpload());
