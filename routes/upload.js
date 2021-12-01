@@ -5,12 +5,16 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 
 // Upload file
-router.post("/", auth, (req, res) => {
-    const files = req.files.files;
+router.post("/", (req, res) => {
+    let files = req.files?.files;
+    if (!files.length) files = [files];
     const allowedExtensions = [".png", ".jpeg", ".jpg"];
     let error = [];
 
-    if (!files) return res.status(400).json({ msg: "No files was uploaded!" });
+    if (!files)
+        return res
+            .status(400)
+            .send({ message: "No files were sent to server!" });
 
     const paths = files.map((file, i) => {
         const extensionName = path.extname(file.name);
@@ -26,16 +30,16 @@ router.post("/", auth, (req, res) => {
 
                     return res.status(500).json({
                         error: err,
-                        errorMessage: "There was a error loading the image.",
+                        errorMessage: "There was a error uploading the image.",
                     });
                 }
             });
-            console.log(file.name);
-            return file.name;
+
+            return `./media/${file.name}`;
         }
     });
 
-    res.status(200).json({ files: paths, error });
+    res.status(200).json({ files: paths, error: error });
 });
 
 module.exports = router;
