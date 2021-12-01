@@ -6,6 +6,7 @@ const config = require("config");
 const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
+const auth = require("../middleware/auth");
 
 // Register - Add user to db
 
@@ -61,6 +62,7 @@ router.post(
                     id: user.id,
                 },
             };
+
             jwt.sign(
                 payload,
                 config.get("jwtSecret"),
@@ -76,5 +78,83 @@ router.post(
         }
     }
 );
+
+// Edit user
+router.put("/:id", auth, async (req, res) => {
+    const {
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+        avatarPath,
+        isActive,
+        type,
+    } = req.body;
+
+    const userFields = {};
+    if (firstName) userFields.firstName = firstName;
+    if (lastName) userFields.lastName = lastName;
+    if (type) userFields.type = type;
+    if (email) {
+        const user = await User.findOne({ email: email });
+        if (user && user.id != req.params.id)
+            return res.status(400).json({ message: "Email is in use!" });
+        userFields.email = email;
+    }
+    if (username) {
+        const user = await User.findOne({ username: username });
+        if (user && user.id != req.params.id)
+            return res
+                .status(400)
+                .json({ message: "Username is already in use!" });
+        userFields.username = username;
+    }
+    if (password) {
+        const salt = await bcrypt.genSalt(10);
+        userFields.password = await bcrypt.hash(password, salt);
+    }
+    if (avatarPath) userFields.avatarPath = avatarPath;
+    if (isActive) userFields.isActive = isActive;
+    userFields.modifiedOn = Date.now();
+
+    try {
+        const userToModify = await User.findById(req.params.id);
+        if (!userToModify)
+            return res
+                .status(404)
+                .send({ message: "User not found in our database." });
+        const user = await User.findByIdAndUpdate(
+            req.params.id,
+            { $set: userFields },
+            { new: true }
+        );
+        return res
+            .status(200)
+            .send({ message: "User modified succefully!", user: user });
+    } catch (error) {
+        console.error(error.message);
+        return res
+            .status(500)
+            .send({ message: "Some error ocurred while modifing the user." });
+    }
+});
+
+// Delete user
+
+router.delete("/:id", auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).send({ message: "User not found!" });
+        await User.findByIdAndRemove(req.params.id);
+        return res.status(200).send({ message: "User deleted succefully!" });
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).send({
+            error: error,
+            message: "A error ocurred on the server while deleting the user.",
+        });
+    }
+});
 
 module.exports = router;
