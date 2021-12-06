@@ -93,9 +93,12 @@ router.put("/:id", auth, async (req, res) => {
     } = req.body;
 
     const userFields = {};
+    userFields.modifiedOn = Date.now();
     if (firstName) userFields.firstName = firstName;
     if (lastName) userFields.lastName = lastName;
     if (type) userFields.type = type;
+    if (avatarPath) userFields.avatarPath = avatarPath;
+    if (isActive) userFields.isActive = isActive;
     if (email) {
         const user = await User.findOne({ email: email });
         if (user && user.id != req.params.id)
@@ -114,9 +117,6 @@ router.put("/:id", auth, async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         userFields.password = await bcrypt.hash(password, salt);
     }
-    if (avatarPath) userFields.avatarPath = avatarPath;
-    if (isActive) userFields.isActive = isActive;
-    userFields.modifiedOn = Date.now();
 
     try {
         const userToModify = await User.findById(req.params.id);
