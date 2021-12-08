@@ -20,6 +20,8 @@ app.use(express.json({ extended: false }));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/upload", require("./routes/upload"));
+app.use("/api/conversations", require("./routes/conversations"));
+app.use("/api/logs", require("./routes/logs"));
 
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "./client/src/index.html"));
