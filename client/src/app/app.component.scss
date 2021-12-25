@@ -7,5 +7,6 @@ body {
 :host {
   background-color: #ddd;
   height: 100vh;
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
