@@ -1,0 +1,11 @@
+app-root {
+  min-height: 100vh;
+  background-color: #000;
+}
+body {
+}
+:host {
+  background-color: #ddd;
+  height: 100vh;
+  display: block;
+}

@@ -1,0 +1,19 @@
+<div class="">
+    <div class="form-wrapper mx-auto text-center p-5 bg-white rounded shadow">
+        <h3 class="display-6 mb-3 form-title">Sign In</h3>
+        <form (ngSubmit)="onSubmit()" [formGroup]="authForm">
+            <div class="form-group">
+                <input type="text" formControlName="username" placeholder="Username/Email..." class="form-control">
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="password" formControlName="password" placeholder="Password..." class="form-control">
+            </div>
+            <div class="btn-group mt-3">
+                <button class="btn btn-outline-success" type="submit">Submit</button>
+            </div>
+        </form>
+        <br>
+        <small class="text-muted">Need an account? <a routerLink="/register">Register</a></small>
+    </div>
+</div>
