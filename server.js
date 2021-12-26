@@ -1,6 +1,7 @@
 const express = require("express");
 const fileUpload = require("express-fileupload");
 const connectDB = require("./config/db");
+const cors = require("cors");
 
 // Path module willl be used to create a valid absolute path for saving the uploaded file.
 const path = require("path");
@@ -12,6 +13,10 @@ connectDB();
 
 // Init fileupload
 app.use(fileUpload());
+
+// Accept CORS requests
+// https://www.cluemediator.com/how-to-enable-cors-in-node-js
+app.use(cors());
 
 // Init Middleware
 app.use(express.json({ extended: false }));

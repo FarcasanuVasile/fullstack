@@ -8,8 +8,20 @@ const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
 const auth = require("../middleware/auth");
 
-// Register - Add user to db
+// Get all users
+router.get("/", async (req, res) => {
+    try {
+        const users = await User.find().sort({ date: -1 });
+        res.status(200).send(users);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({
+            message: "An error ocurred while loading the users!",
+        });
+    }
+});
 
+// Register - Add user to db
 router.post(
     "/",
     [

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -8,6 +9,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class AuthComponent implements OnInit {
   authForm!: FormGroup;
+  isLoading: boolean = false;
+  user = null;
+  token: string = '';
+  isAuthenticated: boolean = false;
+
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.authForm = new FormGroup({
@@ -17,6 +24,14 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.authForm.value);
+    this.authService.login(this.authForm.value).subscribe((data: any) => {
+      this.isLoading = true;
+      console.log(data);
+      localStorage.setItem('token', data.token);
+      this.authService.loadUser().subscribe((data) => {
+        console.log(data);
+      });
+      this.isLoading = false;
+    });
   }
 }

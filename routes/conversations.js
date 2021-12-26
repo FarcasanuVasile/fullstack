@@ -5,7 +5,7 @@ const Conversation = require("../models/Conversation");
 const auth = require("../middleware/auth");
 
 // Get conversations
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
     try {
         const conversations = await Conversation.find().sort({ date: -1 });
         return res.status(200).send({ conversations: conversations });

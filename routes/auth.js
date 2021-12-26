@@ -11,11 +11,12 @@ const auth = require("../middleware/auth");
 
 router.get("/", auth, async (req, res) => {
     try {
-        const user = await User.findOne(req.user.id).select(-password);
+        console.log(req.user);
+        const user = await User.findById(req.user.id).select("-password");
         res.status(200).send({ user });
     } catch (error) {
         console.error(error.message);
-        req.send(500).send({
+        res.status(500).send({
             message: "An error occured while login process.",
         });
     }
