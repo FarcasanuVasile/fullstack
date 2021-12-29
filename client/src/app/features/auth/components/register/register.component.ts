@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { User } from 'src/app/core/models/user.model';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -8,6 +10,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class RegisterComponent {
   registerForm!: FormGroup;
+
+  constructor(private authService: AuthService) {}
+
   ngOnInit(): void {
     this.registerForm = new FormGroup({
       firstName: new FormControl(null),
@@ -19,6 +24,11 @@ export class RegisterComponent {
     });
   }
   onSubmit() {
-    console.log(this.registerForm.value);
+    this.authService.register(this.registerForm.value).subscribe((data) => {
+      this.authService.loadUser().subscribe((data) => {
+        console.log(data);
+      });
+      this.authService.currentUser = data;
+    });
   }
 }

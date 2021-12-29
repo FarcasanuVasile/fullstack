@@ -11,9 +11,8 @@ const auth = require("../middleware/auth");
 
 router.get("/", auth, async (req, res) => {
     try {
-        console.log(req.user);
         const user = await User.findById(req.user.id).select("-password");
-        res.status(200).send({ user });
+        res.status(200).send(user);
     } catch (error) {
         console.error(error.message);
         res.status(500).send({

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { AuthService } from '../../auth.service';
+import * as fromAuthReducer from '../../store/auth.reducer';
+import * as AuthActions from '../../store/auth.actions';
 
 @Component({
   selector: 'app-auth',
@@ -14,7 +17,10 @@ export class AuthComponent implements OnInit {
   token: string = '';
   isAuthenticated: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private store: Store<fromAuthReducer.AppState>
+  ) {}
 
   ngOnInit(): void {
     this.authForm = new FormGroup({
@@ -24,14 +30,14 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.login(this.authForm.value).subscribe((data: any) => {
-      this.isLoading = true;
-      console.log(data);
-      localStorage.setItem('token', data.token);
-      this.authService.loadUser().subscribe((data) => {
-        console.log(data);
+    this.authService.login(this.authForm.value).subscribe((token: any) => {
+      localStorage.setItem('token', token.token);
+      this.authService.loadUser().subscribe((user) => {
+        this.store.dispatch(new AuthActions.StartLogin({ ...user }));
       });
-      this.isLoading = false;
+    });
+    this.store.select('authState').subscribe((state) => {
+      console.log(state);
     });
   }
 }

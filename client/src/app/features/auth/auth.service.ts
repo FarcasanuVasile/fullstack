@@ -5,7 +5,6 @@ import { appConfig } from 'src/app/app.config';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  isAuthenticated: boolean = false;
   private endPoint = `${appConfig.apiUrl}auth`;
   constructor(private http: HttpClient) {}
 
@@ -14,5 +13,8 @@ export class AuthService {
   }
   loadUser() {
     return this.http.get(this.endPoint);
+  }
+  register(body: any) {
+    return this.http.post(`${appConfig.apiUrl}users`, body);
   }
 }

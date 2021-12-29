@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
-import { AuthInterceptorService } from './core/services/auth-token.interceptor';
-
+import { StoreModule } from '@ngrx/store';
+import { authReducer } from './features/auth/store/auth.reducer';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -15,15 +14,9 @@ import { AuthInterceptorService } from './core/services/auth-token.interceptor';
     AppRoutingModule,
     SharedModule,
     CoreModule,
-    HttpClientModule,
+    StoreModule.forRoot({ authState: authReducer }),
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true,
-    },
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
