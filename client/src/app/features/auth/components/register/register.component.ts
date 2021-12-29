@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { User } from 'src/app/core/models/user.model';
 import { AuthService } from '../../auth.service';
 
 @Component({
@@ -28,7 +27,6 @@ export class RegisterComponent {
       this.authService.loadUser().subscribe((data) => {
         console.log(data);
       });
-      this.authService.currentUser = data;
     });
   }
 }

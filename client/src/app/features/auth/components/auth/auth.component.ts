@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../auth.service';
-import * as fromAuthReducer from '../../store/auth.reducer';
+import * as fromApp from '../../../../core/store/app.reducer';
 import * as AuthActions from '../../store/auth.actions';
 
 @Component({
@@ -19,12 +19,12 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private store: Store<fromAuthReducer.AppState>
+    private store: Store<fromApp.AppState>
   ) {}
 
   ngOnInit(): void {
     this.authForm = new FormGroup({
-      username: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required]),
     });
   }
@@ -36,7 +36,7 @@ export class AuthComponent implements OnInit {
         this.store.dispatch(new AuthActions.StartLogin({ ...user }));
       });
     });
-    this.store.select('authState').subscribe((state) => {
+    this.store.select('auth').subscribe((state) => {
       console.log(state);
     });
   }

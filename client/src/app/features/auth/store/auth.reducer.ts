@@ -1,22 +1,17 @@
 import * as fromAuthActions from './auth.actions';
-import { User } from 'src/app/core/models/user.model';
 
-export interface IAuthState {
+export interface IState {
   user: {};
   isAuth: boolean;
   isLoading: false;
   token: string;
 }
-const initialState: IAuthState = {
+const initialState: IState = {
   user: null,
   isAuth: false,
   isLoading: false,
   token: null,
 };
-
-export interface AppState {
-  authState: IAuthState;
-}
 
 export function authReducer(
   state = initialState,
