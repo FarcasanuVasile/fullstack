@@ -4,6 +4,8 @@ import { AuthInterceptorService } from './services/auth-token.interceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import * as fromApp from '../core/store/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './store/auth/auth.effects';
 
 const AuthInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -18,6 +20,7 @@ const AuthInterceptor = {
     CommonModule,
     HttpClientModule,
     StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([AuthEffects]),
   ],
   exports: [],
 })

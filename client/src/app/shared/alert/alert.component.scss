@@ -1,0 +1,26 @@
+.alerts-wrapper {
+  position: fixed;
+  top: 10vh;
+  right: 10vw;
+  z-index: 99;
+  background-color: #fff;
+  border-radius: 8px 8px 0 0;
+  width: 280px;
+}
+.error-icon {
+  line-height: 30px;
+  height: 30px;
+  width: 30px;
+}
+.bottom-bar {
+  height: 5px;
+  background-color: red;
+  background-size: 100%;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  transition: width 5s ease-in-out;
+}
+.alert:not(.open) .bottom-bar {
+  width: 0%;
+}

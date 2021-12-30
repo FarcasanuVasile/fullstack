@@ -3,7 +3,7 @@ import * as fromAuthActions from './auth.actions';
 export interface IState {
   user: {};
   isAuth: boolean;
-  isLoading: false;
+  isLoading: boolean;
   token: string;
 }
 const initialState: IState = {
@@ -21,9 +21,17 @@ export function authReducer(
     case fromAuthActions.AuthActionTypes.LoginStartAction:
       return {
         ...state,
-        user: action.payload,
-        isAuth: true,
+        isLoading: true,
       };
+
+    case fromAuthActions.AuthActionTypes.LoginSuccessAction:
+      return {
+        ...state,
+        isLoading: false,
+        isAuth: true,
+        user: { name: 'Titi' },
+      };
+
     case fromAuthActions.AuthActionTypes.LogoutStartAction:
       return {
         ...state,
