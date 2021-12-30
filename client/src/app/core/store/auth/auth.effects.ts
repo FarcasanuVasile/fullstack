@@ -36,7 +36,6 @@ export class AuthEffects {
       switchMap((userData: fromAuthActions.LoginSuccess) => {
         return this.http.get('http://localhost:5000/api/auth').pipe(
           switchMap((resData) => {
-            console.log(resData);
             return of(new fromAuthActions.LoadUser(resData));
           }),
           catchError((error) => {
@@ -52,5 +51,17 @@ export class AuthEffects {
     )
   );
 
+  notifyLogin$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromAuthActions.AuthActionTypes.LoadUserAction),
+      map(
+        () =>
+          new fromErrorActions.AddNewError({
+            type: 'success',
+            message: 'Login success!',
+          })
+      )
+    )
+  );
   constructor(private actions$: Actions, private http: HttpClient) {}
 }

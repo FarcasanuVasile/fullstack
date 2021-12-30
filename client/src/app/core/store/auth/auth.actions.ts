@@ -17,9 +17,7 @@ export class LoginSuccess implements Action {
 }
 export class LoadUser implements Action {
   readonly type = AuthActionTypes.LoadUserAction;
-  constructor(public payload: any) {
-    console.log('load user');
-  }
+  constructor(public payload: any) {}
 }
 export class Logout implements Action {
   readonly type = AuthActionTypes.LogoutAction;

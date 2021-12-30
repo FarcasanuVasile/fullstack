@@ -26,7 +26,6 @@ export function authReducer(
       };
 
     case fromAuthActions.AuthActionTypes.LoadUserAction:
-      console.log('load user');
       return {
         ...state,
         isLoading: false,
