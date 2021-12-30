@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/core/store/app.reducer';
@@ -8,20 +8,24 @@ import { AppState } from 'src/app/core/store/app.reducer';
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss'],
 })
-export class AlertComponent implements OnInit {
+export class AlertComponent implements OnInit, OnDestroy {
   alerts: { type: string; message: string }[];
   subscription: Subscription;
 
   constructor(private store: Store<AppState>) {}
+  getColor(type): string {
+    if (type == 'danger') return '#dc3545';
+    if (type == 'success') return '#28a745';
+    if (type == 'warning') return '#ffc107';
+    return 'transparent';
+  }
   ngOnInit(): void {
     this.subscription = this.store.select('error').subscribe((errorsState) => {
       this.alerts = errorsState.errors;
     });
   }
-  getColor(type) {
-    if (type == 'danger') return '#dc3545';
-    if (type == 'success') return '#28a745';
-    if (type == 'warning') return '#ffc107';
-    return 'transparent';
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

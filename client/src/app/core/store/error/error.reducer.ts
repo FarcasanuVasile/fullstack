@@ -10,10 +10,17 @@ export function errorReducer(
   action: fromErrorActions.ErrorActions
 ) {
   switch (action.type) {
-    case fromErrorActions.ErrorActionTypes.SetNewError:
+    case fromErrorActions.ErrorActionTypes.AddNewError:
       return {
         ...state,
-        errors: [...state.errors, action.payload],
+        errors: [action.payload, ...state.errors],
+      };
+    case fromErrorActions.ErrorActionTypes.DisposeError:
+      const newErrors = Array.from(state.errors);
+      newErrors.pop();
+      return {
+        ...state,
+        errors: newErrors,
       };
     default:
       return state;

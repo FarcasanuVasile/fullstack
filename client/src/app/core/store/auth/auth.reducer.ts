@@ -19,20 +19,22 @@ export function authReducer(
 ) {
   switch (action.type) {
     case fromAuthActions.AuthActionTypes.LoginStartAction:
+    case fromAuthActions.AuthActionTypes.LoginSuccessAction:
       return {
         ...state,
         isLoading: true,
       };
 
-    case fromAuthActions.AuthActionTypes.LoginSuccessAction:
+    case fromAuthActions.AuthActionTypes.LoadUserAction:
+      console.log('load user');
       return {
         ...state,
         isLoading: false,
         isAuth: true,
-        user: { name: 'Titi' },
+        user: action.payload,
       };
 
-    case fromAuthActions.AuthActionTypes.LogoutStartAction:
+    case fromAuthActions.AuthActionTypes.LogoutAction:
       return {
         ...state,
         user: null,

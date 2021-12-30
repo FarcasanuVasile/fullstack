@@ -1,5 +1,6 @@
 <div class="alerts-wrapper">
-    <div class="alert position-relative d-flex align-items-center  justify-content-start mb-0 alert-{{alert.type}} border-0 open"
+    <div removeClassDirective
+        class="alert position-relative d-flex align-items-center  justify-content-start mb-0 alert-{{alert.type}} border-0 rounded-0 open"
         *ngFor="let alert of alerts">
         <div class="error-icon mr-2 text-center rounded-circle text-white font-weight-bold"
             [ngStyle]="{backgroundColor:getColor(alert.type)}">{{

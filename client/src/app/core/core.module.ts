@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import * as fromApp from '../core/store/app.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/auth/auth.effects';
+import { ErrorEffects } from './store/error/error.effects';
 
 const AuthInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -20,7 +21,7 @@ const AuthInterceptor = {
     CommonModule,
     HttpClientModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, ErrorEffects]),
   ],
   exports: [],
 })

@@ -1,12 +1,10 @@
 import { Action } from '@ngrx/store';
 
 export enum AuthActionTypes {
-  FetchUserStartAction = '[Auth] Fetch User Start Action',
-  FetchUserEndAction = '[Auth] Fetch User End Action',
   LoginStartAction = '[Auth] Login Start Action',
   LoginSuccessAction = '[Auth] Login Success Action',
-  LogoutStartAction = '[Auth] Logout Start Action',
-  LogoutEndAction = '[Auth] Logout End Action',
+  LoadUserAction = '[Auth] Load User Action',
+  LogoutAction = '[Auth] Logout Start Action',
 }
 
 export class LoginStart implements Action {
@@ -15,9 +13,15 @@ export class LoginStart implements Action {
 }
 export class LoginSuccess implements Action {
   readonly type = AuthActionTypes.LoginSuccessAction;
-  constructor() {}
+  constructor(public payload: string) {}
+}
+export class LoadUser implements Action {
+  readonly type = AuthActionTypes.LoadUserAction;
+  constructor(public payload: any) {
+    console.log('load user');
+  }
 }
 export class Logout implements Action {
-  readonly type = AuthActionTypes.LogoutStartAction;
+  readonly type = AuthActionTypes.LogoutAction;
 }
-export type AuthActions = LoginStart | Logout | LoginSuccess;
+export type AuthActions = LoginStart | LoginSuccess | LoadUser | Logout;

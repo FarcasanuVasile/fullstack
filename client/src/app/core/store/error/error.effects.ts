@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap } from 'rxjs';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, delay, map, of, switchMap, tap } from 'rxjs';
 
 import * as fromErrorActions from './error.actions';
 @Injectable()
 export class ErrorEffects {
-  // @Effect() dissmisError = this.actions$.pipe(
-  //     ofType(fromErrorActions.ErrorActionTypes.SetNewError),
-  //     switchMap
-  // );
+  disposeError = createEffect((): any =>
+    this.actions$.pipe(
+      ofType(fromErrorActions.ErrorActionTypes.AddNewError),
+      delay(5000),
+      map((errorData: fromErrorActions.AddNewError) => {
+        return new fromErrorActions.DisposeError();
+      })
+    )
+  );
+
   constructor(private actions$: Actions) {}
 }
