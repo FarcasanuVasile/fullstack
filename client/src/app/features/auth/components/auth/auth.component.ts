@@ -13,9 +13,6 @@ import * as AuthActions from '../../../../core/store/auth/auth.actions';
 export class AuthComponent implements OnInit {
   authForm!: FormGroup;
   isLoading: boolean = false;
-  user = null;
-  token: string = '';
-  isAuthenticated: boolean = false;
 
   constructor(private store: Store<fromApp.AppState>) {}
 
@@ -27,15 +24,6 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.authService.login(this.authForm.value).subscribe((token: any) => {
-    //   localStorage.setItem('token', token.token);
-    //   this.authService.loadUser().subscribe((user) => {
-    //     this.store.dispatch(new AuthActions.StartLogin({ ...user }));
-    //   });
-    // });
-    // this.store.select('auth').subscribe((state) => {
-    //   console.log(state);
-    // });
     this.store.dispatch(new AuthActions.LoginStart(this.authForm.value));
   }
 }

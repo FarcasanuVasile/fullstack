@@ -1,0 +1,22 @@
+:host {
+  flex-grow: 1;
+  background-color: #fff;
+}
+.user-main-col {
+  margin: 0 -16px;
+  padding: 16px;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    180deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 118, 121, 1) 100%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}
+.user-image {
+  img {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+  }
+}

@@ -1,6 +1,27 @@
-<div class="user-container bg-white">
-    <div class="row">
-        <div class="col-md-2">User</div>
-        <div class="col-md-10">User Info</div>
+<div class="user-container container-fluid bg-white h-100">
+    <div class="row h-100">
+        <div class="col-md-2 user-main-col">
+            <div class="user-info text-center text-white" *ngIf="user">
+                <h4 class="font-weight-normal mt-2">{{user.firstName}} {{user.lastName}}</h4>
+                <div class="user-image mt-4">
+                    <img src="../../../../../assets/download.png" [alt]="user.username" class="img-fluid">
+                </div>
+                <div class="mt-4 text-muted fst-italic">Member since: <span class="text-white">{{
+                        user.createdOn|date:'y' }}</span></div>
+            </div>
+        </div>
+        <div class="col-md-10 p-4">User Info
+            <div class="row">
+                <div class="col-md-2">First name: </div>
+                <div class="col-md-10">{{user.firstName}}</div>
+                <div class="col-md-2">Last Name: </div>
+                <div class="col-md-10">{{user.lastName}}</div>
+                <div class="col-md-2">Username: </div>
+                <div class="col-md-10">{{user.username}}</div>
+                <div class="col-md-2">Email: </div>
+                <div class="col-md-10">{{user.email}}</div>
+
+            </div>
+        </div>
     </div>
 </div>

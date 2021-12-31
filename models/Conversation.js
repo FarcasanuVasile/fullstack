@@ -5,7 +5,7 @@ const ConversationSchema = mongoose.Schema({
         type: [String],
     },
     messages: {
-        type: [String],
+        type: [],
     },
     createdOn: {
         type: Date,

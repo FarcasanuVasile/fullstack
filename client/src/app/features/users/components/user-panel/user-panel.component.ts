@@ -9,11 +9,12 @@ import * as fromApp from '../../../../core/store/app.reducer';
 })
 export class UserPanelComponent implements OnInit {
   subscription;
-  user!: {};
+  user;
   constructor(private store: Store<fromApp.AppState>) {}
   ngOnInit() {
     this.subscription = this.store.select('auth').subscribe((state) => {
-      console.log(state);
+      this.user = state.user;
+      console.log(this.user);
     });
   }
 }

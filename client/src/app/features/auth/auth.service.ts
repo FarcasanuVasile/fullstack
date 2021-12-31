@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { appConfig } from 'src/app/app.config';
+import { environment } from './../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private endPoint = `${appConfig.apiUrl}auth`;
+  private endPoint = `${environment.apiUrl}auth`;
   constructor(private http: HttpClient) {}
 
   login(body: any) {
@@ -15,6 +15,6 @@ export class AuthService {
     return this.http.get(this.endPoint);
   }
   register(body: any) {
-    return this.http.post(`${appConfig.apiUrl}users`, body);
+    return this.http.post(`${environment.apiUrl}users`, body);
   }
 }
